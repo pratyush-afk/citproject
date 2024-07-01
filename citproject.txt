@@ -1,0 +1,143 @@
+package pratyush;
+import java.util.Scanner;
+
+// Base class for Pizza
+class Pizza {
+    protected double basePrice;
+    protected boolean extraCheese;
+    protected boolean extraToppings;
+    protected boolean takeAway;
+
+    public Pizza(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public void addExtraCheese() {
+        this.extraCheese = true;
+    }
+
+    public void addExtraToppings() {
+        this.extraToppings = true;
+    }
+
+    public void addTakeAway() {
+        this.takeAway = true;
+    }
+
+    public double calculatePrice() {
+        double finalPrice = basePrice;
+        if (extraCheese) {
+            finalPrice += 50; // Assuming extra cheese costs 50 units
+        }
+        if (extraToppings) {
+            finalPrice += 70; // Assuming extra toppings cost 70 units
+        }
+        if (takeAway) {
+            finalPrice += 20; // Assuming packing charges are 20 units
+        }
+        return finalPrice;
+    }
+
+    public void generateBill() {
+        System.out.println("Base Price: " + basePrice);
+        if (extraCheese) {
+            System.out.println("Extra Cheese: 50");
+        }
+        if (extraToppings) {
+            System.out.println("Extra Toppings: 70");
+        }
+        if (takeAway) {
+            System.out.println("Take Away Charges: 20");
+        }
+        System.out.println("Total: " + calculatePrice());
+    }
+}
+
+// Subclass for Deluxe Veg Pizza
+class DeluxeVegPizza extends Pizza {
+    public DeluxeVegPizza() {
+        super(300); // Assuming the base price of Deluxe Veg Pizza is 300 units
+        this.extraCheese = true;
+        this.extraToppings = true;
+    }
+}
+
+// Subclass for Deluxe Non-Veg Pizza
+class DeluxeNonVegPizza extends Pizza {
+    public DeluxeNonVegPizza() {
+        super(400); // Assuming the base price of Deluxe Non-Veg Pizza is 400 units
+        this.extraCheese = true;
+        this.extraToppings = true;
+    }
+}
+
+// Subclass for Veg Pizza
+class VegPizza extends Pizza {
+    public VegPizza() {
+        super(200); // Assuming the base price of Veg Pizza is 200 units
+    }
+}
+
+// Subclass for Non-Veg Pizza
+class NonVegPizza extends Pizza {
+    public NonVegPizza() {
+        super(250); // Assuming the base price of Non-Veg Pizza is 250 units
+    }
+}
+
+public class demo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome to Pizza Mania!");
+        System.out.println("Please select the type of pizza:");
+        System.out.println("1. Veg Pizza");
+        System.out.println("2. Non-Veg Pizza");
+        System.out.println("3. Deluxe Veg Pizza");
+        System.out.println("4. Deluxe Non-Veg Pizza");
+
+        int choice = sc.nextInt();
+        Pizza pizza = null;
+
+        switch (choice) {
+            case 1:
+                pizza = new VegPizza();
+                break;
+            case 2:
+                pizza = new NonVegPizza();
+                break;
+            case 3:
+                pizza = new DeluxeVegPizza();
+                break;
+            case 4:
+                pizza = new DeluxeNonVegPizza();
+                break;
+            default:
+                System.out.println("Invalid choice");
+                System.exit(0);
+        }
+
+        if (choice == 1 || choice == 2) {
+            System.out.println("Would you like to add extra cheese? (yes/no)");
+            String extraCheese = sc.next();
+            if (extraCheese.equalsIgnoreCase("yes")) {
+                pizza.addExtraCheese();
+            }
+
+            System.out.println("Would you like to add extra toppings? (yes/no)");
+            String extraToppings = sc.next();
+            if (extraToppings.equalsIgnoreCase("yes")) {
+                pizza.addExtraToppings();
+            }
+        }
+
+        System.out.println("Would you like to opt for take away? (yes/no)");
+        String takeAway = sc.next();
+        if (takeAway.equalsIgnoreCase("yes")) {
+            pizza.addTakeAway();
+        }
+
+        System.out.println("Generating your bill...");
+        pizza.generateBill();
+    }
+}
